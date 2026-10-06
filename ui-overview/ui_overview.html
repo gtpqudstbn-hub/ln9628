@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>传奇类MMORPG UI总览</title>
+<style>
+:root{
+  --gold:#e3c27a; --gold2:#b8893b; --gold3:#6e4f1f; --ink:#0d0a07; --panel:#1e1610; --panel2:#2a1f15;
+  --text:#e9dcc0; --mute:#9d8c6c; --red:#c8261c; --blue:#2466d1; --green:#3fae49; --purple:#a04ad8; --orange:#e8892a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:3200px;background:#0a0806;font-family:"WenQuanYi Zen Hei",sans-serif;color:var(--text);
+  background-image:radial-gradient(ellipse at 50% 0%,#2a1b10 0%,#0a0806 60%);padding:40px 50px 60px}
+h1{font-size:54px;letter-spacing:8px;color:var(--gold);text-shadow:0 0 18px #a86b1c,0 3px 0 #000;text-align:center}
+.sub{text-align:center;color:var(--mute);font-size:20px;margin:8px 0 26px;letter-spacing:3px}
+.sec{margin-top:34px}
+.sec-t{display:flex;align-items:center;gap:16px;font-size:28px;color:var(--gold);margin-bottom:16px;letter-spacing:4px}
+.sec-t b{display:inline-block;background:linear-gradient(#e9c77f,#9a6d28);color:#1a1006;font-size:20px;padding:4px 12px;border-radius:3px}
+.sec-t:after{content:"";flex:1;height:2px;background:linear-gradient(90deg,var(--gold2),transparent)}
+.row{display:flex;gap:28px;align-items:flex-start;flex-wrap:nowrap}
+.cap{color:var(--mute);font-size:16px;text-align:center;margin-top:8px}
+
+/* ---------- window frame ---------- */
+.win{position:relative;background:
+  linear-gradient(180deg,rgba(255,220,150,.05),transparent 30%),
+  repeating-linear-gradient(45deg,rgba(255,255,255,.012) 0 2px,transparent 2px 6px),
+  var(--panel);
+  border:2px solid var(--gold2);outline:2px solid #000;box-shadow:inset 0 0 0 3px #3b2a15,inset 0 0 0 4px #000,inset 0 0 40px #000,0 10px 30px #000;
+  border-radius:4px;padding:52px 18px 18px}
+.win:before,.win:after{content:"";position:absolute;width:26px;height:26px;border:3px solid var(--gold);top:-5px;left:-5px;border-right:none;border-bottom:none;border-radius:3px 0 0 0;filter:drop-shadow(0 0 3px #a8701e)}
+.win:after{left:auto;right:-5px;border-left:none;border-right:3px solid var(--gold);border-radius:0 3px 0 0}
+.wt{position:absolute;top:0;left:0;right:0;height:40px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(#4a3418,#22170c);border-bottom:2px solid var(--gold2);font-size:20px;color:var(--gold);letter-spacing:6px;text-shadow:0 2px 0 #000}
+.wt:before,.wt:after{content:"◆";color:var(--gold2);font-size:12px;margin:0 12px}
+.x{position:absolute;right:8px;top:7px;width:26px;height:26px;border:1px solid var(--gold2);border-radius:50%;
+  background:radial-gradient(#7a1d12,#3a0a05);color:#f3c9a0;font-size:16px;display:flex;align-items:center;justify-content:center}
+.tabs{display:flex;gap:4px;margin-bottom:12px;border-bottom:2px solid var(--gold3)}
+.tab{padding:7px 18px;background:linear-gradient(#2c2014,#18110a);border:1px solid var(--gold3);border-bottom:none;color:var(--mute);font-size:16px;border-radius:4px 4px 0 0}
+.tab.on{background:linear-gradient(#6a4a1d,#33230f);color:#ffe7b0;border-color:var(--gold)}
+.inset{background:#120d08;border:1px solid #4a3519;box-shadow:inset 0 0 10px #000}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;height:40px;padding:0 18px;font-size:17px;letter-spacing:3px;
+  color:#ffe9b8;text-shadow:0 1px 0 #000;border:1px solid #000;border-radius:4px;
+  background:linear-gradient(#8a5f22 0%,#5a3b12 48%,#3f280a 52%,#5c3d14 100%);
+  box-shadow:inset 0 0 0 1px var(--gold),inset 0 2px 0 rgba(255,240,200,.35),0 2px 4px #000}
+.btn.hover{background:linear-gradient(#b07c30 0%,#7a5219 48%,#5a3a0e 52%,#7a5219 100%);color:#fff;box-shadow:inset 0 0 0 1px #ffe2a0,0 0 12px #e3a43b,0 2px 4px #000}
+.btn.down{background:linear-gradient(#3a260b,#5a3b12);box-shadow:inset 0 0 0 1px var(--gold2),inset 0 3px 6px #000;transform:translateY(1px)}
+.btn.dis{background:linear-gradient(#4a4540,#2a2724);color:#7d766c;box-shadow:inset 0 0 0 1px #666,0 2px 4px #000}
+.btn.red{background:linear-gradient(#b3322a,#6e140e 50%,#520c08 52%,#7c1a12);box-shadow:inset 0 0 0 1px #f0a080,0 2px 4px #000}
+.btn.blue{background:linear-gradient(#3a6cb8,#1b3d74 50%,#132d58 52%,#1f4784);box-shadow:inset 0 0 0 1px #9cc2ff,0 2px 4px #000}
+.btn.sm{min-width:70px;height:30px;font-size:14px;letter-spacing:1px;padding:0 10px}
+.btn.big{min-width:220px;height:58px;font-size:24px;letter-spacing:8px}
+
+/* ---------- slots/items ---------- */
+.slot{width:56px;height:56px;position:relative;background:radial-gradient(#2a2016,#0e0a06);border:1px solid #5a4220;box-shadow:inset 0 0 8px #000;border-radius:3px;display:flex;align-items:center;justify-content:center}
+.slot svg{width:44px;height:44px}
+.slot .n{position:absolute;right:3px;bottom:1px;font-size:13px;color:#fff;text-shadow:0 0 2px #000,0 0 2px #000}
+.q1{border-color:#bbb}.q2{border-color:#4fd65c;box-shadow:inset 0 0 10px rgba(79,214,92,.35)}
+.q3{border-color:#4a8dff;box-shadow:inset 0 0 10px rgba(74,141,255,.45)}
+.q4{border-color:#c063ff;box-shadow:inset 0 0 12px rgba(192,99,255,.5)}
+.q5{border-color:#ff9a2a;box-shadow:inset 0 0 14px rgba(255,154,42,.6),0 0 8px rgba(255,154,42,.6)}
+.q6{border-color:#ff3b3b;box-shadow:inset 0 0 14px rgba(255,59,59,.6),0 0 10px rgba(255,59,59,.7)}
+.lbl{font-size:13px;color:var(--mute);text-align:center}
+.grid{display:grid;gap:4px}
+
+/* ---------- bars ---------- */
+.bar{height:16px;border:1px solid #000;background:#1a0f08;box-shadow:inset 0 0 0 1px #5a4220;position:relative;border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%}
+.bar span{position:absolute;inset:0;font-size:12px;line-height:15px;text-align:center;color:#fff;text-shadow:0 0 2px #000}
+.hp i{background:linear-gradient(#ff6a55,#b0170d 60%,#7a0b05)}
+.mp i{background:linear-gradient(#6fb0ff,#1d55c4 60%,#0f2f78)}
+.ex i{background:linear-gradient(#ffe68a,#d89a1a 60%,#8a5a06)}
+.gr i{background:linear-gradient(#9cf08a,#2f9a2a 60%,#145810)}
+
+/* ---------- HUD ---------- */
+.scene{position:relative;width:1920px;height:1080px;overflow:hidden;border:3px solid var(--gold2);outline:2px solid #000;box-shadow:0 10px 40px #000;
+  background:
+   radial-gradient(ellipse at 55% 45%,rgba(255,190,90,.18),transparent 45%),
+   repeating-linear-gradient(30deg,rgba(0,0,0,.18) 0 40px,transparent 40px 80px),
+   repeating-linear-gradient(-30deg,rgba(0,0,0,.18) 0 40px,transparent 40px 80px),
+   linear-gradient(#3a4426,#2d3a1f 40%,#4a3b25)}
+.tile{position:absolute;border-radius:50%;filter:blur(1px)}
+.hero{position:absolute;left:900px;top:430px;text-align:center}
+.nm{font-size:16px;color:#ffe066;text-shadow:0 0 3px #000,0 0 3px #000;white-space:nowrap}
+.nm.g{color:#7fe3ff}.nm.r{color:#ff5b4b}
+.dmg{position:absolute;font-weight:bold;font-size:40px;color:#ffdd33;text-shadow:0 0 4px #000,0 2px 0 #8a2a00;font-style:italic}
+.panel{background:linear-gradient(rgba(30,22,14,.92),rgba(14,10,6,.92));border:1px solid var(--gold2);box-shadow:inset 0 0 0 2px #000,0 2px 10px #000;border-radius:4px}
+.orb{width:150px;height:150px;border-radius:50%;position:relative;overflow:hidden;border:5px solid #2a1c0c;box-shadow:0 0 0 3px var(--gold2),0 0 0 6px #000,inset 0 0 25px #000}
+.orb .liq{position:absolute;left:0;right:0;bottom:0}
+.orb .gl{position:absolute;left:22%;top:10%;width:45%;height:28%;border-radius:50%;background:linear-gradient(rgba(255,255,255,.55),transparent)}
+.orb .v{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:17px;color:#fff;text-shadow:0 0 3px #000,0 0 3px #000}
+.key{position:absolute;left:3px;top:1px;font-size:11px;color:#ffe6a8;text-shadow:0 0 2px #000}
+.cd{position:absolute;inset:0;background:conic-gradient(rgba(0,0,0,.72) 0 62%,transparent 62%);display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff}
+.mbtn{width:54px;height:54px;border-radius:50%;background:radial-gradient(#5a3d18,#1d1308);border:2px solid var(--gold2);box-shadow:0 0 0 2px #000,inset 0 0 8px #000;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;color:var(--gold)}
+.mbtn svg{width:26px;height:26px}
+.chat p{font-size:15px;line-height:22px;text-shadow:0 1px 0 #000}
+.c-sys{color:#ffcc33}.c-world{color:#f08cff}.c-guild{color:#7cf27c}.c-team{color:#6ad3ff}.c-near{color:#eee}
+.tip{background:linear-gradient(rgba(20,14,8,.97),rgba(8,6,3,.97));border:1px solid var(--gold2);box-shadow:inset 0 0 0 1px #000,0 6px 20px #000;padding:12px 14px;font-size:15px;line-height:24px;border-radius:4px}
+.attr{display:flex;justify-content:space-between;font-size:15px;line-height:27px;border-bottom:1px dashed #3a2a14;padding:0 4px}
+.attr b{color:#ffe7a8;font-weight:normal}
+.chk{display:inline-flex;align-items:center;gap:8px;font-size:15px}
+.chk i{width:20px;height:20px;border:1px solid var(--gold2);background:#0e0a06;box-shadow:inset 0 0 4px #000;display:flex;align-items:center;justify-content:center;color:#ffd060;font-style:normal;font-size:16px}
+.rad i{border-radius:50%}
+.sld{position:relative;height:8px;background:#0e0a06;border:1px solid #5a4220;border-radius:4px;width:220px}
+.sld i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#8a5a16,#f0c060);border-radius:4px}
+.sld u{position:absolute;top:-7px;width:20px;height:20px;border-radius:50%;background:radial-gradient(#ffe6a0,#a06a18);border:1px solid #000;box-shadow:0 0 6px #f0b040}
+.inp{height:36px;background:#0b0805;border:1px solid var(--gold3);box-shadow:inset 0 0 6px #000;color:var(--mute);font-size:15px;padding:0 10px;display:flex;align-items:center;border-radius:3px}
+.list .it{display:flex;align-items:center;gap:10px;padding:6px 8px;border-bottom:1px solid #2e2213;font-size:15px}
+.list .it.on{background:linear-gradient(90deg,rgba(227,194,122,.25),transparent);box-shadow:inset 3px 0 0 var(--gold)}
+.gold{color:#ffd24a}.green{color:#5fe06a}.blue2{color:#6aa8ff}.purple{color:#d08aff}.orange{color:#ffa640}.red2{color:#ff5a4a}
+.swatch{width:120px;height:56px;border-radius:4px;border:1px solid #000;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);display:flex;align-items:flex-end;padding:4px 6px;font-size:12px;color:#fff;text-shadow:0 0 2px #000}
+</style></head>
+<body>
+<!-- ================== SVG icon library ================== -->
+<svg width="0" height="0" style="position:absolute">
+ <defs>
+  <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f7ff"/><stop offset=".5" stop-color="#9aa6b8"/><stop offset="1" stop-color="#4a5260"/></linearGradient>
+  <linearGradient id="au" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff2b0"/><stop offset=".5" stop-color="#e0a630"/><stop offset="1" stop-color="#7a4a08"/></linearGradient>
+  <radialGradient id="rp"><stop offset="0" stop-color="#ff9a80"/><stop offset=".6" stop-color="#d0180c"/><stop offset="1" stop-color="#5a0602"/></radialGradient>
+  <radialGradient id="bp"><stop offset="0" stop-color="#a8d4ff"/><stop offset=".6" stop-color="#1c5ad6"/><stop offset="1" stop-color="#081c56"/></radialGradient>
+  <radialGradient id="fire"><stop offset="0" stop-color="#fff6a0"/><stop offset=".45" stop-color="#ff8a10"/><stop offset="1" stop-color="#8a1000"/></radialGradient>
+  <radialGradient id="ice"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#6fd8ff"/><stop offset="1" stop-color="#0a3a8a"/></radialGradient>
+  <radialGradient id="poi"><stop offset="0" stop-color="#e6ff9a"/><stop offset=".5" stop-color="#4cc22a"/><stop offset="1" stop-color="#0e4a08"/></radialGradient>
+  <radialGradient id="holy"><stop offset="0" stop-color="#fffbe0"/><stop offset=".5" stop-color="#ffd24a"/><stop offset="1" stop-color="#8a5a00"/></radialGradient>
+  <radialGradient id="dark"><stop offset="0" stop-color="#e0a0ff"/><stop offset=".5" stop-color="#7a28c0"/><stop offset="1" stop-color="#1e0640"/></radialGradient>
+ </defs>
+ <symbol id="i-sword" viewBox="0 0 48 48"><path d="M40 4 L44 8 L20 32 L16 28Z" fill="url(#steel)" stroke="#222"/><path d="M11 27 L21 37 L18 40 L8 30Z" fill="url(#au)" stroke="#3a2200"/><path d="M13 35 L6 42 L8 44 L15 37Z" fill="#5a2f10" stroke="#000"/><circle cx="6" cy="43" r="3" fill="url(#au)"/></symbol>
+ <symbol id="i-axe" viewBox="0 0 48 48"><rect x="22" y="6" width="4" height="40" fill="#6a3a14" stroke="#000"/><path d="M26 8 C42 6 44 26 26 24Z" fill="url(#steel)" stroke="#222"/><path d="M22 8 C8 8 8 22 22 22Z" fill="url(#steel)" stroke="#222"/></symbol>
+ <symbol id="i-staff" viewBox="0 0 48 48"><rect x="22" y="14" width="4" height="32" fill="#5a2f10" stroke="#000"/><circle cx="24" cy="10" r="8" fill="url(#ice)" stroke="#123"/><path d="M14 16 Q24 24 34 16" stroke="url(#au)" stroke-width="3" fill="none"/></symbol>
+ <symbol id="i-helm" viewBox="0 0 48 48"><path d="M8 30 C8 10 40 10 40 30 L40 38 L30 38 L30 28 L18 28 L18 38 L8 38Z" fill="url(#steel)" stroke="#222"/><path d="M24 6 L24 18" stroke="#c22" stroke-width="5"/><rect x="20" y="28" width="8" height="12" fill="url(#au)"/></symbol>
+ <symbol id="i-armor" viewBox="0 0 48 48"><path d="M10 10 L18 6 Q24 12 30 6 L38 10 L42 20 L36 22 L36 42 L12 42 L12 22 L6 20Z" fill="url(#au)" stroke="#3a2200"/><path d="M18 14 L30 14 L28 36 L20 36Z" fill="#8a1a10" stroke="#000"/></symbol>
+ <symbol id="i-ring" viewBox="0 0 48 48"><circle cx="24" cy="28" r="12" fill="none" stroke="url(#au)" stroke-width="5"/><path d="M24 6 L31 14 L24 20 L17 14Z" fill="url(#rp)" stroke="#300"/></symbol>
+ <symbol id="i-neck" viewBox="0 0 48 48"><path d="M8 6 Q24 34 40 6" fill="none" stroke="url(#au)" stroke-width="3"/><path d="M24 24 L32 34 L24 44 L16 34Z" fill="url(#bp)" stroke="#012"/></symbol>
+ <symbol id="i-brace" viewBox="0 0 48 48"><ellipse cx="24" cy="24" rx="16" ry="12" fill="none" stroke="url(#steel)" stroke-width="7"/><circle cx="24" cy="12" r="4" fill="url(#poi)"/></symbol>
+ <symbol id="i-boots" viewBox="0 0 48 48"><path d="M14 6 L28 6 L28 30 L42 34 L42 42 L10 42 L12 30Z" fill="#6a3a14" stroke="#000"/><rect x="12" y="8" width="16" height="6" fill="url(#au)"/></symbol>
+ <symbol id="i-belt" viewBox="0 0 48 48"><rect x="4" y="18" width="40" height="12" fill="#5a2f10" stroke="#000"/><rect x="18" y="15" width="12" height="18" fill="none" stroke="url(#au)" stroke-width="3"/></symbol>
+ <symbol id="i-hpp" viewBox="0 0 48 48"><rect x="19" y="4" width="10" height="8" fill="#a07040" stroke="#000"/><path d="M18 12 L30 12 L30 18 C42 22 42 44 24 44 C6 44 6 22 18 18Z" fill="url(#rp)" stroke="#200"/><ellipse cx="19" cy="26" rx="3" ry="6" fill="rgba(255,255,255,.5)"/></symbol>
+ <symbol id="i-mpp" viewBox="0 0 48 48"><rect x="19" y="4" width="10" height="8" fill="#a07040" stroke="#000"/><path d="M18 12 L30 12 L30 18 C42 22 42 44 24 44 C6 44 6 22 18 18Z" fill="url(#bp)" stroke="#012"/><ellipse cx="19" cy="26" rx="3" ry="6" fill="rgba(255,255,255,.5)"/></symbol>
+ <symbol id="i-scroll" viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="28" fill="#e8d6a8" stroke="#5a3a10"/><rect x="6" y="6" width="36" height="6" rx="3" fill="#8a5a20"/><rect x="6" y="36" width="36" height="6" rx="3" fill="#8a5a20"/><path d="M16 18h16M16 24h16M16 30h10" stroke="#8a2a10" stroke-width="2"/></symbol>
+ <symbol id="i-gem" viewBox="0 0 48 48"><path d="M24 4 L40 18 L24 44 L8 18Z" fill="url(#dark)" stroke="#200030"/><path d="M8 18 L40 18 M24 4 L18 18 L24 44 L30 18Z" stroke="rgba(255,255,255,.5)" fill="none"/></symbol>
+ <symbol id="i-coin" viewBox="0 0 48 48"><circle cx="20" cy="28" r="12" fill="url(#au)" stroke="#5a3a00"/><circle cx="28" cy="20" r="12" fill="url(#au)" stroke="#5a3a00"/><text x="28" y="25" font-size="13" text-anchor="middle" fill="#6a3a00" font-weight="bold">元</text></symbol>
+ <symbol id="i-book" viewBox="0 0 48 48"><rect x="8" y="6" width="30" height="36" fill="#5a1a8a" stroke="#000"/><rect x="38" y="8" width="4" height="32" fill="#eee"/><circle cx="23" cy="24" r="8" fill="none" stroke="url(#au)" stroke-width="2"/><path d="M23 16v16M15 24h16" stroke="url(#au)" stroke-width="2"/></symbol>
+ <symbol id="i-chest" viewBox="0 0 48 48"><path d="M6 20 Q6 8 24 8 Q42 8 42 20Z" fill="#7a3a12" stroke="#000"/><rect x="6" y="20" width="36" height="20" fill="#8a4a18" stroke="#000"/><rect x="6" y="18" width="36" height="4" fill="url(#au)"/><rect x="20" y="20" width="8" height="10" fill="url(#au)"/></symbol>
+ <!-- skills -->
+ <symbol id="s-fire" viewBox="0 0 48 48"><rect width="48" height="48" fill="#300800"/><path d="M24 4 C34 16 40 22 36 34 C33 42 15 42 12 34 C9 26 16 22 18 14 C22 20 22 24 26 26 C28 18 24 10 24 4Z" fill="url(#fire)"/></symbol>
+ <symbol id="s-light" viewBox="0 0 48 48"><rect width="48" height="48" fill="#06103a"/><path d="M28 2 L12 26 L22 26 L16 46 L36 18 L26 18 L32 2Z" fill="url(#ice)" stroke="#fff" stroke-width=".5"/></symbol>
+ <symbol id="s-shield" viewBox="0 0 48 48"><rect width="48" height="48" fill="#0a1a30"/><path d="M24 4 L40 10 C40 30 32 40 24 44 C16 40 8 30 8 10Z" fill="url(#ice)" opacity=".85" stroke="#cff"/><path d="M24 12 L24 36 M14 20 L34 20" stroke="#fff" stroke-width="2"/></symbol>
+ <symbol id="s-heal" viewBox="0 0 48 48"><rect width="48" height="48" fill="#0a2a08"/><circle cx="24" cy="24" r="18" fill="url(#poi)"/><path d="M24 12v24M12 24h24" stroke="#fff" stroke-width="6"/></symbol>
+ <symbol id="s-slash" viewBox="0 0 48 48"><rect width="48" height="48" fill="#2a0606"/><path d="M6 40 Q20 10 44 6 Q26 20 14 44Z" fill="url(#rp)"/><path d="M10 38 Q24 14 42 8" stroke="#fff" stroke-width="2" fill="none"/></symbol>
+ <symbol id="s-dog" viewBox="0 0 48 48"><rect width="48" height="48" fill="#1a1006"/><circle cx="24" cy="26" r="16" fill="url(#holy)"/><path d="M14 18 L18 8 L22 18 M26 18 L30 8 L34 18" fill="#fff"/><circle cx="19" cy="26" r="2" fill="#000"/><circle cx="29" cy="26" r="2" fill="#000"/></symbol>
+ <symbol id="s-poison" viewBox="0 0 48 48"><rect width="48" height="48" fill="#0a1a04"/><circle cx="24" cy="20" r="13" fill="url(#poi)"/><circle cx="19" cy="18" r="3" fill="#000"/><circle cx="29" cy="18" r="3" fill="#000"/><rect x="18" y="32" width="12" height="8" fill="#cfc"/></symbol>
+ <symbol id="s-thunder" viewBox="0 0 48 48"><rect width="48" height="48" fill="#120626"/><circle cx="24" cy="24" r="20" fill="url(#dark)"/><path d="M26 6 L16 26 L24 26 L20 42 L32 20 L24 20Z" fill="#fff"/></symbol>
+ <symbol id="s-wind" viewBox="0 0 48 48"><rect width="48" height="48" fill="#06202a"/><path d="M6 16 Q30 6 40 16 Q30 14 20 20 M6 28 Q34 20 42 30 Q28 26 16 32 M10 38 Q28 34 36 40" stroke="#bff" stroke-width="3" fill="none"/></symbol>
+ <!-- menu -->
+ <symbol id="m-char" viewBox="0 0 48 48"><circle cx="24" cy="15" r="9" fill="url(#au)"/><path d="M8 44 C8 28 40 28 40 44Z" fill="url(#au)"/></symbol>
+ <symbol id="m-bag" viewBox="0 0 48 48"><path d="M10 18 L38 18 L42 44 L6 44Z" fill="url(#au)"/><path d="M17 18 C17 6 31 6 31 18" stroke="url(#au)" stroke-width="4" fill="none"/></symbol>
+ <symbol id="m-skill" viewBox="0 0 48 48"><path d="M24 4 L30 18 L44 18 L33 28 L37 44 L24 34 L11 44 L15 28 L4 18 L18 18Z" fill="url(#au)"/></symbol>
+ <symbol id="m-quest" viewBox="0 0 48 48"><rect x="10" y="4" width="28" height="40" rx="3" fill="url(#au)"/><text x="24" y="34" font-size="26" text-anchor="middle" fill="#3a2000" font-weight="bold">!</text></symbol>
+ <symbol id="m-guild" viewBox="0 0 48 48"><rect x="10" y="4" width="3" height="40" fill="url(#au)"/><path d="M13 6 L40 10 L32 18 L40 26 L13 24Z" fill="url(#au)"/></symbol>
+ <symbol id="m-team" viewBox="0 0 48 48"><circle cx="16" cy="16" r="7" fill="url(#au)"/><circle cx="32" cy="16" r="7" fill="url(#au)"/><path d="M2 42 C2 26 30 26 30 42Z M18 42 C18 26 46 26 46 42Z" fill="url(#au)"/></symbol>
+ <symbol id="m-shop" viewBox="0 0 48 48"><path d="M4 18 L10 6 L38 6 L44 18Z" fill="url(#au)"/><rect x="8" y="18" width="32" height="24" fill="url(#au)"/><rect x="20" y="28" width="8" height="14" fill="#3a2000"/></symbol>
+ <symbol id="m-set" viewBox="0 0 48 48"><circle cx="24" cy="24" r="14" fill="none" stroke="url(#au)" stroke-width="8" stroke-dasharray="6 4"/><circle cx="24" cy="24" r="6" fill="url(#au)"/></symbol>
+ <symbol id="m-mail" viewBox="0 0 48 48"><rect x="4" y="10" width="40" height="28" fill="url(#au)"/><path d="M4 10 L24 28 L44 10" stroke="#3a2000" stroke-width="3" fill="none"/></symbol>
+ <symbol id="m-rank" viewBox="0 0 48 48"><rect x="4" y="24" width="12" height="20" fill="url(#au)"/><rect x="18" y="10" width="12" height="34" fill="url(#au)"/><rect x="32" y="18" width="12" height="26" fill="url(#au)"/></symbol>
+ <symbol id="m-friend" viewBox="0 0 48 48"><path d="M24 42 C4 28 4 10 16 10 C20 10 24 14 24 18 C24 14 28 10 32 10 C44 10 44 28 24 42Z" fill="url(#au)"/></symbol>
+ <symbol id="m-forge" viewBox="0 0 48 48"><path d="M6 30 L42 30 L36 40 L12 40Z" fill="url(#au)"/><rect x="26" y="4" width="6" height="22" fill="url(#au)" transform="rotate(30 29 15)"/><rect x="16" y="6" width="20" height="10" fill="url(#au)" transform="rotate(30 26 11)"/></symbol>
+</defs>
+</svg>
+
+<h1>赤 月 传 说 · 客户端 UI 全套总览</h1>
+<div class="sub">PC 端 · 1920×1080 基准分辨率 · 暗金古风 MMORPG 视觉规范 v1.0</div>
+
+<!-- ============ 01 主界面 ============ -->
+<div class="sec">
+ <div class="sec-t"><b>01</b>主操作界面 HUD（1920×1080）</div>
+ <div class="row">
+ <div class="scene" id="scene">
+  <!-- environment decoration -->
+  <div class="tile" style="left:200px;top:180px;width:340px;height:140px;background:rgba(20,30,10,.6)"></div>
+  <div class="tile" style="left:1300px;top:600px;width:420px;height:160px;background:rgba(80,60,30,.5)"></div>
+  <div class="tile" style="left:600px;top:700px;width:300px;height:90px;background:rgba(60,90,140,.35)"></div>
+  <!-- trees/rocks -->
+  <svg style="position:absolute;left:0;top:0" width="1920" height="1080">
+   <g opacity=".85">
+    <g transform="translate(300,260)"><ellipse cx="0" cy="70" rx="60" ry="14" fill="rgba(0,0,0,.4)"/><rect x="-8" y="20" width="16" height="50" fill="#3a2410"/><circle cx="0" cy="0" r="50" fill="#1e3a14"/><circle cx="-25" cy="15" r="35" fill="#28481a"/><circle cx="25" cy="-10" r="32" fill="#2c5020"/></g>
+    <g transform="translate(1500,330)"><ellipse cx="0" cy="70" rx="60" ry="14" fill="rgba(0,0,0,.4)"/><rect x="-8" y="20" width="16" height="50" fill="#3a2410"/><circle cx="0" cy="0" r="55" fill="#1e3a14"/><circle cx="25" cy="15" r="35" fill="#28481a"/></g>
+    <g transform="translate(1180,780)"><path d="M-60 30 L-40 -20 L10 -35 L55 -5 L60 30Z" fill="#4a4438" stroke="#222"/><path d="M-40 -20 L10 -35 L0 0Z" fill="#6a6252"/></g>
+    <g transform="translate(560,560)"><path d="M-40 20 L-25 -15 L15 -22 L40 0 L42 20Z" fill="#4a4438" stroke="#222"/></g>
+   </g>
+   <!-- target circle -->
+   <ellipse cx="1150" cy="520" rx="46" ry="18" fill="none" stroke="#ff4030" stroke-width="3" stroke-dasharray="8 6"/>
+   <!-- monster -->
+   <g transform="translate(1150,450)"><ellipse cx="0" cy="70" rx="40" ry="10" fill="rgba(0,0,0,.5)"/><path d="M-30 70 L-36 10 Q0 -40 36 10 L30 70Z" fill="#5a2a2a" stroke="#000" stroke-width="2"/><circle cx="-12" cy="10" r="6" fill="#ff3"/><circle cx="12" cy="10" r="6" fill="#ff3"/><path d="M-30 -10 L-46 -36 L-22 -18 M30 -10 L46 -36 L22 -18" stroke="#ddd" stroke-width="6" fill="none"/></g>
+   <!-- hero -->
+   <g transform="translate(940,470)"><ellipse cx="0" cy="70" rx="34" ry="10" fill="rgba(0,0,0,.5)"/><path d="M-20 70 L-24 20 Q0 0 24 20 L20 70Z" fill="#8a1a10" stroke="#000" stroke-width="2"/><path d="M-24 22 L24 22 L18 40 L-18 40Z" fill="url(#au)"/><circle cx="0" cy="0" r="16" fill="#e0b088" stroke="#000"/><path d="M-18 -6 Q0 -30 18 -6Z" fill="url(#steel)" stroke="#000"/><path d="M26 30 L80 -20" stroke="url(#steel)" stroke-width="7"/><path d="M22 34 L32 24" stroke="url(#au)" stroke-width="10"/></g>
+   <!-- pet / other player -->
+   <g transform="translate(720,560)"><ellipse cx="0" cy="40" rx="28" ry="8" fill="rgba(0,0,0,.5)"/><path d="M-26 40 Q-30 0 0 -6 Q30 0 26 40Z" fill="#c9b070" stroke="#000"/><circle cx="-8" cy="10" r="4"/><circle cx="8" cy="10" r="4"/></g>
+   <!-- skill fx -->
+   <circle cx="1150" cy="470" r="70" fill="url(#fire)" opacity=".35"/>
+   <!-- dropped items -->
+   <g transform="translate(1040,640)"><use href="#i-coin" width="34" height="34"/></g>
+   <g transform="translate(1250,600)"><use href="#i-ring" width="34" height="34"/></g>
+   <!-- npc -->
+   <g transform="translate(470,420)"><ellipse cx="0" cy="66" rx="30" ry="9" fill="rgba(0,0,0,.5)"/><path d="M-22 66 L-26 18 Q0 4 26 18 L22 66Z" fill="#2a4a8a" stroke="#000" stroke-width="2"/><circle cx="0" cy="2" r="15" fill="#e0b088" stroke="#000"/><path d="M-10 10 Q0 30 10 10" fill="#eee"/></g>
+  </svg>
+  <div style="position:absolute;left:400px;top:362px;width:140px;text-align:center"><div class="nm g">【比奇城】仓库管理员</div><div style="font-size:24px;color:#ffd700;text-shadow:0 0 6px #f80">❗</div></div>
+  <div style="position:absolute;left:840px;top:388px;width:200px;text-align:center"><div class="nm" style="color:#7cf27c">&lt;龙腾天下&gt;</div><div class="nm">☆屠龙战神☆</div><div class="bar hp" style="width:80px;height:7px;margin:3px auto"><i style="width:82%"></i></div></div>
+  <div style="position:absolute;left:1070px;top:358px;width:160px;text-align:center"><div class="nm r">沃玛教主 [BOSS]</div><div class="bar hp" style="width:110px;height:8px;margin:3px auto"><i style="width:46%"></i></div></div>
+  <div style="position:absolute;left:660px;top:520px;width:120px;text-align:center"><div class="nm" style="color:#ddd;font-size:14px">神兽(宝宝)</div></div>
+  <div class="dmg" style="left:1190px;top:380px">-12,846</div>
+  <div class="dmg" style="left:1230px;top:330px;color:#ff4a2a;font-size:46px">暴击 -28,930</div>
+  <div class="dmg" style="left:870px;top:330px;color:#56ff6a;font-size:28px">+3,520</div>
+  <div class="dmg" style="left:1220px;top:440px;color:#bbb;font-size:26px">闪避</div>
+
+  <!-- top-left: player frame -->
+  <div style="position:absolute;left:16px;top:16px;display:flex;gap:10px;align-items:flex-start">
+   <div style="width:96px;height:96px;border-radius:50%;border:3px solid var(--gold);box-shadow:0 0 0 3px #000,0 0 14px #b07020;background:radial-gradient(#6a3a20,#1a0a04);position:relative;overflow:hidden">
+    <svg width="96" height="96" viewBox="0 0 96 96"><circle cx="48" cy="40" r="20" fill="#e0b088"/><path d="M26 34 Q48 0 70 34Z" fill="url(#steel)"/><path d="M14 96 Q48 50 82 96Z" fill="#8a1a10"/><path d="M30 64 L66 64 L60 80 L36 80Z" fill="url(#au)"/></svg>
+    <div style="position:absolute;bottom:0;left:0;right:0;text-align:center;background:rgba(0,0,0,.7);font-size:15px;color:#ffe080">Lv.86</div>
+   </div>
+   <div class="panel" style="padding:8px 12px;width:290px">
+    <div style="display:flex;justify-content:space-between;font-size:17px"><span class="gold">屠龙战神</span><span style="color:#ff9a6a">战士 · 转生3</span></div>
+    <div class="bar hp" style="margin-top:6px"><i style="width:82%"></i><span>HP 18,650 / 22,700</span></div>
+    <div class="bar mp" style="margin-top:4px"><i style="width:64%"></i><span>MP 4,120 / 6,400</span></div>
+    <div style="display:flex;gap:4px;margin-top:6px">
+     <div class="slot" style="width:26px;height:26px"><svg style="width:22px;height:22px"><use href="#s-shield"/></svg></div>
+     <div class="slot" style="width:26px;height:26px"><svg style="width:22px;height:22px"><use href="#s-heal"/></svg></div>
+     <div class="slot" style="width:26px;height:26px"><svg style="width:22px;height:22px"><use href="#s-wind"/></svg></div>
+     <div class="slot" style="width:26px;height:26px;border-color:#a33"><svg style="width:22px;height:22px"><use href="#s-poison"/></svg></div>
+     <span style="font-size:13px;color:var(--mute);margin-left:6px;line-height:26px">战力 <b class="orange" style="font-weight:normal">1,286,540</b></span>
+    </div>
+   </div>
+  </div>
+  <!-- top-center target -->
+  <div class="panel" style="position:absolute;left:720px;top:16px;width:480px;padding:8px 12px;display:flex;gap:10px;align-items:center">
+   <div style="width:56px;height:56px;border-radius:50%;border:2px solid #ff4030;background:radial-gradient(#5a2a2a,#100);display:flex;align-items:center;justify-content:center;font-size:12px;color:#fcc">BOSS</div>
+   <div style="flex:1"><div style="display:flex;justify-content:space-between;font-size:16px"><span class="red2">沃玛教主</span><span style="color:var(--mute)">Lv.90 · 首领</span></div>
+   <div class="bar hp" style="height:18px;margin-top:5px"><i style="width:46%"></i><span>46% · ×38</span></div>
+   <div style="font-size:12px;color:var(--mute);margin-top:3px">归属：<span class="gold">龙腾天下</span> · 伤害第一：屠龙战神</div></div>
+  </div>
+  <!-- top right: minimap -->
+  <div style="position:absolute;right:16px;top:16px;width:260px">
+   <div class="panel" style="padding:4px 8px;display:flex;justify-content:space-between;font-size:14px"><span class="gold">沃玛寺庙 三层</span><span style="color:#9df">325,217</span></div>
+   <div style="margin-top:4px;width:260px;height:200px;position:relative;border:2px solid var(--gold2);outline:2px solid #000;background:
+     linear-gradient(90deg,transparent 48%,#6a5a3a 48% 52%,transparent 52%),linear-gradient(transparent 30%,#6a5a3a 30% 34%,transparent 34%),
+     radial-gradient(circle at 70% 70%,#3a5030 0 30px,transparent 31px),#2a2418;overflow:hidden">
+     <div style="position:absolute;left:126px;top:96px;width:0;height:0;border:7px solid transparent;border-bottom:14px solid #ffe060;transform:translateY(-8px)"></div>
+     <i style="position:absolute;left:60px;top:40px;width:7px;height:7px;background:#3df;border-radius:50%"></i>
+     <i style="position:absolute;left:180px;top:130px;width:9px;height:9px;background:#f33;border-radius:50%;box-shadow:0 0 6px #f33"></i>
+     <i style="position:absolute;left:150px;top:60px;width:6px;height:6px;background:#f33;border-radius:50%"></i>
+     <i style="position:absolute;left:90px;top:150px;width:6px;height:6px;background:#3f3;border-radius:50%"></i>
+     <span style="position:absolute;left:30px;top:170px;font-size:12px;color:#fd6">▲传送门</span>
+   </div>
+   <div style="display:flex;gap:6px;justify-content:flex-end;margin-top:6px">
+    <span class="btn sm" style="min-width:auto">世界</span><span class="btn sm" style="min-width:auto">挂机</span><span class="btn sm" style="min-width:auto">PK:和平</span>
+   </div>
+  </div>
+  <!-- top activity icons -->
+  <div style="position:absolute;right:290px;top:16px;display:flex;gap:10px">
+   <div class="mbtn" style="width:58px;height:58px"><svg><use href="#i-chest"/></svg>福利</div>
+   <div class="mbtn" style="width:58px;height:58px"><svg><use href="#m-shop"/></svg>商城</div>
+   <div class="mbtn" style="width:58px;height:58px;box-shadow:0 0 0 2px #000,0 0 14px #f60"><svg><use href="#m-guild"/></svg>攻沙</div>
+   <div class="mbtn" style="width:58px;height:58px"><svg><use href="#m-rank"/></svg>排行</div>
+  </div>
+  <!-- right: quest tracker -->
+  <div class="panel" style="position:absolute;right:16px;top:300px;width:260px;padding:8px 10px">
+   <div class="tabs" style="margin-bottom:6px"><span class="tab on" style="padding:3px 12px;font-size:14px">任务</span><span class="tab" style="padding:3px 12px;font-size:14px">队伍</span></div>
+   <div style="font-size:14px;line-height:22px">
+    <div class="gold">[主线] 沃玛教主的阴谋</div><div style="color:#ccc;padding-left:10px">击败 <span class="red2">沃玛教主</span> (0/1)</div>
+    <div class="green" style="margin-top:6px">[日常] 除魔任务 ✔</div><div style="color:#ccc;padding-left:10px">回复 <span class="blue2">比奇城·老兵</span></div>
+    <div style="color:#d08aff;margin-top:6px">[行会] 资源采集</div><div style="color:#ccc;padding-left:10px">采集黑铁矿 (7/20)</div>
+   </div>
+  </div>
+  <!-- left: chat -->
+  <div class="panel chat" style="position:absolute;left:16px;bottom:150px;width:520px;height:250px;padding:0;background:rgba(10,7,4,.72)">
+   <div style="display:flex;gap:2px;padding:4px 4px 0">
+    <span class="tab on" style="padding:3px 12px;font-size:13px">综合</span><span class="tab" style="padding:3px 12px;font-size:13px">世界</span><span class="tab" style="padding:3px 12px;font-size:13px">行会</span><span class="tab" style="padding:3px 12px;font-size:13px">队伍</span><span class="tab" style="padding:3px 12px;font-size:13px">私聊</span><span class="tab" style="padding:3px 12px;font-size:13px">系统</span>
+   </div>
+   <div style="padding:6px 10px;height:170px;overflow:hidden">
+    <p class="c-sys">【系统】恭喜 <u>剑舞红尘</u> 在沃玛寺庙获得 <span class="orange">[屠龙]</span>！</p>
+    <p class="c-world">【世界】狂刀：收 裁决之杖，价格好说！</p>
+    <p class="c-guild">【行会】龙腾天下·会长：今晚 20:00 攻沙集合！</p>
+    <p class="c-team">【队伍】小法师：我来拉怪，道士上毒</p>
+    <p class="c-near">【附近】路人甲：大佬带带我</p>
+    <p class="c-sys">【系统】你获得了 经验 +58,200</p>
+    <p class="c-sys">【系统】你拾取了 <span class="blue2">[强效金创药]</span> ×3</p>
+   </div>
+   <div style="display:flex;gap:4px;padding:0 6px 6px"><div class="inp" style="flex:1;height:30px">按 Enter 输入聊天内容…</div><span class="btn sm">发送</span></div>
+  </div>
+  <!-- system marquee -->
+  <div style="position:absolute;left:560px;top:100px;width:800px;height:34px;background:linear-gradient(90deg,transparent,rgba(120,20,10,.75) 15%,rgba(120,20,10,.75) 85%,transparent);display:flex;align-items:center;justify-content:center;font-size:18px;color:#ffe680;text-shadow:0 0 4px #000">📢 沙巴克攻城战将于 20:00 开启，请各行会做好准备！</div>
+  <!-- right-mid: quick buttons -->
+  <div style="position:absolute;right:16px;bottom:180px;display:grid;grid-template-columns:repeat(2,58px);gap:10px">
+   <div class="mbtn" style="width:58px;height:58px"><svg><use href="#m-friend"/></svg>好友</div>
+   <div class="mbtn" style="width:58px;height:58px"><svg><use href="#m-mail"/></svg>邮件</div>
+   <div class="mbtn" style="width:58px;height:58px"><svg><use href="#m-forge"/></svg>锻造</div>
+   <div class="mbtn" style="width:58px;height:58px"><svg><use href="#m-set"/></svg>设置</div>
+  </div>
+
+  <!-- bottom main bar -->
+  <div style="position:absolute;left:0;right:0;bottom:0;height:140px;background:linear-gradient(transparent,rgba(0,0,0,.6) 30%)"></div>
+  <div style="position:absolute;left:330px;right:330px;bottom:8px;height:120px;background:linear-gradient(#3a2810,#1a1108);border:2px solid var(--gold2);outline:2px solid #000;border-radius:8px 8px 4px 4px;box-shadow:inset 0 0 20px #000,0 -4px 16px rgba(0,0,0,.8)"></div>
+  <div style="position:absolute;left:190px;bottom:10px" class="orb"><div class="liq" style="height:82%;background:radial-gradient(circle at 50% 20%,#ff7a60,#c01a0e 50%,#5a0602)"></div><div class="gl"></div><div class="v">18650<br>/22700</div></div>
+  <div style="position:absolute;right:190px;bottom:10px" class="orb"><div class="liq" style="height:64%;background:radial-gradient(circle at 50% 20%,#7ab8ff,#1c50c8 50%,#081a56)"></div><div class="gl"></div><div class="v">4120<br>/6400</div></div>
+  <!-- skills -->
+  <div id="skillbar" style="position:absolute;left:360px;bottom:58px;display:flex;gap:6px"></div>
+  <div id="itembar" style="position:absolute;left:360px;bottom:16px;display:flex;gap:6px"></div>
+  <div id="menubar" style="position:absolute;left:1010px;bottom:20px;display:flex;gap:8px"></div>
+  <!-- exp -->
+  <div class="bar ex" style="position:absolute;left:340px;right:340px;bottom:126px;height:12px"><i style="width:73.6%"></i><span style="font-size:11px;line-height:11px">EXP 73.60%</span></div>
+ </div>
+
+ <!-- HUD annotation -->
+ <div style="flex:1">
+  <div class="win" style="width:100%">
+   <div class="wt">界面布局说明</div>
+   <div style="font-size:17px;line-height:34px">
+    <div><span class="gold">①</span> 左上 · 角色头像 / 等级 / HP·MP / Buff栏 / 战力</div>
+    <div><span class="gold">②</span> 顶部中 · 目标框（BOSS 显示归属、层数血条）</div>
+    <div><span class="gold">③</span> 右上 · 小地图 + 地图名坐标 + 世界/挂机/PK模式</div>
+    <div><span class="gold">④</span> 活动入口：福利 / 商城 / 攻沙 / 排行</div>
+    <div><span class="gold">⑤</span> 右侧 · 任务 & 队伍追踪面板</div>
+    <div><span class="gold">⑥</span> 左下 · 聊天框（6 频道，颜色区分）</div>
+    <div><span class="gold">⑦</span> 底部 · 经典血球 / 蓝球 + 经验条</div>
+    <div><span class="gold">⑧</span> 技能栏 F1–F8（含冷却遮罩）+ 快捷物品 1–6</div>
+    <div><span class="gold">⑨</span> 功能菜单：角色 C / 背包 B / 技能 K / 任务 Q / 行会 G / 组队 T</div>
+    <div><span class="gold">⑩</span> 头顶信息：行会名·角色名·血条 / 飘字（伤害/暴击/治疗/闪避）</div>
+   </div>
+  </div>
+  <div class="win" style="width:100%;margin-top:26px">
+   <div class="wt">色彩规范</div>
+   <div style="display:flex;flex-wrap:wrap;gap:10px">
+    <div class="swatch" style="background:#e3c27a;color:#000;text-shadow:none">主金 #E3C27A</div>
+    <div class="swatch" style="background:#b8893b">描边 #B8893B</div>
+    <div class="swatch" style="background:#1e1610">底板 #1E1610</div>
+    <div class="swatch" style="background:#c8261c">生命 #C8261C</div>
+    <div class="swatch" style="background:#2466d1">魔法 #2466D1</div>
+    <div class="swatch" style="background:#d89a1a">经验 #D89A1A</div>
+   </div>
+   <div style="margin-top:14px;font-size:15px;color:var(--mute)">装备品质</div>
+   <div style="display:flex;gap:10px;margin-top:6px">
+    <div class="swatch" style="background:#bbb;color:#000;text-shadow:none;width:80px">普通</div>
+    <div class="swatch" style="background:#3fae49;width:80px">精良</div>
+    <div class="swatch" style="background:#2c6ee0;width:80px">稀有</div>
+    <div class="swatch" style="background:#9a3ad8;width:80px">史诗</div>
+    <div class="swatch" style="background:#e8892a;width:80px">传说</div>
+    <div class="swatch" style="background:#d42828;width:80px">神器</div>
+   </div>
+   <div style="margin-top:14px;font-size:15px;color:var(--mute)">字体：标题 24px 描金加投影 / 正文 15–17px / 数值 等宽数字</div>
+  </div>
+ </div>
+ </div>
+</div>
+
+<!-- ============ 02 核心系统窗口 ============ -->
+<div class="sec">
+ <div class="sec-t"><b>02</b>核心系统窗口</div>
+ <div class="row">
+  <!-- character -->
+  <div class="win" style="width:560px">
+   <div class="wt">角色信息</div><div class="x">✕</div>
+   <div class="tabs"><span class="tab on">装备</span><span class="tab">属性</span><span class="tab">称号</span><span class="tab">时装</span></div>
+   <div style="display:flex;gap:10px">
+    <div id="eqL" class="grid" style="grid-template-columns:56px;gap:8px"></div>
+    <div class="inset" style="flex:1;height:440px;position:relative;background:radial-gradient(ellipse at 50% 60%,#4a2a12,#0e0804 70%)">
+     <svg width="100%" height="100%" viewBox="0 0 300 440">
+      <ellipse cx="150" cy="400" rx="80" ry="16" fill="rgba(255,170,60,.25)"/>
+      <path d="M100 400 L95 220 Q150 180 205 220 L200 400Z" fill="#7a1408" stroke="#000" stroke-width="2"/>
+      <path d="M95 222 L205 222 L190 290 L110 290Z" fill="url(#au)" stroke="#3a2000"/>
+      <path d="M80 230 Q70 200 100 200 L95 260Z M220 230 Q230 200 200 200 L205 260Z" fill="url(#au)" stroke="#000"/>
+      <circle cx="150" cy="160" r="34" fill="#e0b088" stroke="#000"/>
+      <path d="M112 152 Q150 90 188 152 L180 130 Q150 100 120 130Z" fill="url(#steel)" stroke="#000"/>
+      <path d="M150 96 L150 120" stroke="#c22" stroke-width="8"/>
+      <path d="M215 260 L280 60" stroke="url(#steel)" stroke-width="12"/><path d="M205 280 L228 250" stroke="url(#au)" stroke-width="16"/>
+     </svg>
+     <div style="position:absolute;top:8px;left:0;right:0;text-align:center"><div class="nm" style="font-size:20px">屠龙战神</div><div style="font-size:13px;color:#7cf27c">&lt;龙腾天下&gt; 会长</div></div>
+     <div style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:16px">战力 <span class="orange" style="font-size:22px">1,286,540</span></div>
+    </div>
+    <div id="eqR" class="grid" style="grid-template-columns:56px;gap:8px"></div>
+   </div>
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 20px;margin-top:12px">
+    <div class="attr"><span>攻击</span><b>1280-2460</b></div><div class="attr"><span>防御</span><b>860-1320</b></div>
+    <div class="attr"><span>魔法</span><b>0-0</b></div><div class="attr"><span>魔御</span><b>620-980</b></div>
+    <div class="attr"><span>准确</span><b>+46</b></div><div class="attr"><span>敏捷</span><b>+38</b></div>
+    <div class="attr"><span>暴击</span><b>18.5%</b></div><div class="attr"><span>幸运</span><b class="orange">+7</b></div>
+   </div>
+  </div>
+
+  <!-- bag -->
+  <div class="win" style="width:560px">
+   <div class="wt">背 包</div><div class="x">✕</div>
+   <div class="tabs"><span class="tab on">全部</span><span class="tab">装备</span><span class="tab">药品</span><span class="tab">材料</span><span class="tab">任务</span></div>
+   <div id="bag" class="grid inset" style="grid-template-columns:repeat(8,58px);gap:6px;padding:10px;justify-content:center"></div>
+   <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:16px">
+    <div><svg width="20" height="20"><use href="#i-coin"/></svg> 金币 <span class="gold">12,860,450</span></div>
+    <div><span style="color:#ff8aa8">◆</span> 元宝 <span class="orange">8,800</span></div>
+    <div style="color:var(--mute)">容量 46/64</div>
+   </div>
+   <div style="display:flex;gap:10px;margin-top:12px;justify-content:center">
+    <span class="btn sm">整理</span><span class="btn sm">回收</span><span class="btn sm">仓库</span><span class="btn sm">摆摊</span><span class="btn sm">扩展</span>
+   </div>
+  </div>
+
+  <!-- skills -->
+  <div class="win" style="width:520px">
+   <div class="wt">技 能</div><div class="x">✕</div>
+   <div class="tabs"><span class="tab on">主动</span><span class="tab">被动</span><span class="tab">内功</span><span class="tab">合击</span></div>
+   <div class="list inset" style="padding:4px" id="skilllist"></div>
+   <div class="tip" style="margin-top:12px">
+    <div style="display:flex;gap:10px;align-items:center"><div class="slot q5"><svg><use href="#s-slash"/></svg></div><div><div class="orange" style="font-size:18px">烈火剑法 Lv.4</div><div style="color:var(--mute);font-size:13px">冷却 8 秒 · 消耗 MP 35</div></div></div>
+    <div style="margin-top:6px">召唤烈火附着于剑身，下一次攻击造成 <span class="red2">280%</span> 伤害并附带灼烧。</div>
+    <div class="bar gr" style="margin-top:6px"><i style="width:58%"></i><span>熟练度 5,800 / 10,000</span></div>
+   </div>
+   <div style="display:flex;gap:10px;justify-content:center;margin-top:12px"><span class="btn">升 级</span><span class="btn">设为快捷</span></div>
+  </div>
+
+  <!-- quest -->
+  <div class="win" style="width:520px">
+   <div class="wt">任 务</div><div class="x">✕</div>
+   <div class="tabs"><span class="tab on">进行中</span><span class="tab">可接取</span><span class="tab">已完成</span></div>
+   <div style="display:flex;gap:10px">
+    <div class="list inset" style="width:180px;padding:4px;font-size:14px">
+     <div style="color:var(--gold);padding:4px 6px">▼ 主线任务</div>
+     <div class="it on">沃玛教主的阴谋</div>
+     <div style="color:var(--gold);padding:4px 6px">▼ 日常任务</div>
+     <div class="it">除魔任务</div><div class="it">押镖运送</div>
+     <div style="color:var(--gold);padding:4px 6px">▼ 行会任务</div>
+     <div class="it">资源采集</div><div class="it">守护神兽</div>
+     <div style="color:var(--gold);padding:4px 6px">▶ 支线任务</div>
+    </div>
+    <div class="inset" style="flex:1;padding:12px;font-size:15px;line-height:25px">
+     <div class="gold" style="font-size:18px">沃玛教主的阴谋</div>
+     <div style="color:var(--mute)">推荐等级 85 · 主线 第12章</div>
+     <div style="margin-top:8px">比奇城的老兵告诉你，沃玛寺庙深处的教主正在召唤远古邪灵。前往寺庙三层，将其击败！</div>
+     <div class="gold" style="margin-top:10px">任务目标</div>
+     <div>· 击败 <span class="red2">沃玛教主</span> (0/1)</div>
+     <div>· 收集 <span class="blue2">沃玛号角</span> (1/1) ✔</div>
+     <div class="gold" style="margin-top:10px">任务奖励</div>
+     <div style="display:flex;gap:6px;margin-top:4px">
+      <div class="slot q4"><svg><use href="#i-neck"/></svg></div><div class="slot q3"><svg><use href="#i-book"/></svg></div><div class="slot q2"><svg><use href="#i-hpp"/></svg><span class="n">20</span></div><div class="slot"><svg><use href="#i-coin"/></svg><span class="n">5w</span></div>
+     </div>
+     <div style="margin-top:6px">经验 <span class="gold">+2,400,000</span></div>
+    </div>
+   </div>
+   <div style="display:flex;gap:10px;justify-content:center;margin-top:12px"><span class="btn">自动寻路</span><span class="btn red">放弃任务</span></div>
+  </div>
+
+  <!-- mail -->
+  <div class="win" style="flex:1">
+   <div class="wt">邮 件</div><div class="x">✕</div>
+   <div class="tabs"><span class="tab on">系统</span><span class="tab">个人</span><span class="tab">行会</span></div>
+   <div class="list inset" style="padding:4px;font-size:14px">
+    <div class="it on"><svg width="30" height="30"><use href="#m-mail"/></svg><div style="flex:1"><div class="gold">攻城奖励</div><div style="color:var(--mute);font-size:12px">系统 · 剩余 6 天</div></div><span style="color:#ff5a4a">📎</span></div>
+    <div class="it"><svg width="30" height="30"><use href="#m-mail"/></svg><div style="flex:1"><div>每日签到奖励</div><div style="color:var(--mute);font-size:12px">系统 · 剩余 3 天</div></div><span style="color:#ff5a4a">📎</span></div>
+    <div class="it" style="opacity:.55"><svg width="30" height="30"><use href="#m-mail"/></svg><div style="flex:1"><div>拍卖行成交</div><div style="color:var(--mute);font-size:12px">已读</div></div></div>
+   </div>
+   <div class="inset" style="margin-top:10px;padding:12px;font-size:15px;line-height:24px">
+    <div class="gold" style="font-size:17px">攻城奖励</div>
+    <div>恭喜贵行会成功占领沙巴克城！以下为本次攻城奖励，请查收。</div>
+    <div style="display:flex;gap:6px;margin-top:8px"><div class="slot q6"><svg><use href="#i-chest"/></svg></div><div class="slot q4"><svg><use href="#i-gem"/></svg><span class="n">10</span></div><div class="slot"><svg><use href="#i-coin"/></svg><span class="n">100w</span></div></div>
+   </div>
+   <div style="display:flex;gap:10px;justify-content:center;margin-top:12px"><span class="btn sm">领取附件</span><span class="btn sm">一键领取</span><span class="btn sm red">删除</span></div>
+  </div>
+ </div>
+</div>
+
+<!-- ============ 03 交互窗口 ============ -->
+<div class="sec">
+ <div class="sec-t"><b>03</b>交互 & 社交窗口</div>
+ <div class="row">
+  <!-- NPC dialog -->
+  <div class="win" style="width:600px">
+   <div class="wt">NPC 对话</div><div class="x">✕</div>
+   <div style="display:flex;gap:14px">
+    <div class="inset" style="width:150px;height:200px;background:radial-gradient(#2a4a8a,#060c1a)">
+     <svg width="150" height="200" viewBox="0 0 150 200"><path d="M30 200 Q75 110 120 200Z" fill="#2a4a8a"/><circle cx="75" cy="90" r="34" fill="#e0b088" stroke="#000"/><path d="M50 110 Q75 170 100 110 Q75 130 50 110Z" fill="#eee"/><path d="M40 80 Q75 30 110 80 Q75 60 40 80Z" fill="#3a2a5a"/></svg>
+    </div>
+    <div style="flex:1;font-size:16px;line-height:28px">
+     <div class="gold" style="font-size:19px">比奇城 · 老兵</div>
+     <div>勇士，你终于来了！沃玛寺庙的邪气越来越重，我们需要你的力量。你想做点什么？</div>
+     <div style="margin-top:8px;color:#7cf27c">▶ 领取主线任务【沃玛教主的阴谋】</div>
+     <div style="color:#7cf27c">▶ 提交日常【除魔任务】</div>
+     <div style="color:#6ad3ff">▶ 传送至 沃玛寺庙（5,000 金币）</div>
+     <div style="color:#ffcc33">▶ 购买药品</div>
+     <div style="color:#ccc">▶ 离开</div>
+    </div>
+   </div>
+  </div>
+  <!-- shop -->
+  <div class="win" style="width:520px">
+   <div class="wt">杂货铺</div><div class="x">✕</div>
+   <div class="tabs"><span class="tab on">药品</span><span class="tab">卷轴</span><span class="tab">回购</span></div>
+   <div class="grid" style="grid-template-columns:1fr 1fr;gap:8px" id="shop"></div>
+   <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><span>持有 <span class="gold">12,860,450</span> 金币</span><span class="btn">全部修理</span></div>
+  </div>
+  <!-- trade -->
+  <div class="win" style="width:480px">
+   <div class="wt">交 易</div><div class="x">✕</div>
+   <div style="display:flex;gap:12px">
+    <div style="flex:1"><div class="gold" style="text-align:center;margin-bottom:6px">对方：剑舞红尘</div>
+     <div class="grid inset" style="grid-template-columns:repeat(3,58px);gap:6px;padding:8px;justify-content:center" id="tradeA"></div>
+     <div style="margin-top:8px;font-size:14px">金币 <span class="gold">0</span></div><div class="btn sm" style="margin-top:8px;width:100%;color:#7cf27c">✔ 已锁定</div></div>
+    <div style="flex:1"><div class="gold" style="text-align:center;margin-bottom:6px">我方：屠龙战神</div>
+     <div class="grid inset" style="grid-template-columns:repeat(3,58px);gap:6px;padding:8px;justify-content:center" id="tradeB"></div>
+     <div style="margin-top:8px;font-size:14px">金币 <span class="gold">3,000,000</span></div><div class="btn sm" style="margin-top:8px;width:100%">锁定</div></div>
+   </div>
+   <div style="display:flex;gap:10px;justify-content:center;margin-top:14px"><span class="btn dis">确认交易</span><span class="btn red">取消</span></div>
+  </div>
+  <!-- guild -->
+  <div class="win" style="width:700px;flex:1">
+   <div class="wt">行 会</div><div class="x">✕</div>
+   <div class="tabs"><span class="tab on">成员</span><span class="tab">信息</span><span class="tab">仓库</span><span class="tab">技能</span><span class="tab">攻城</span></div>
+   <div style="display:flex;gap:16px;margin-bottom:10px;font-size:15px">
+    <div style="width:64px;height:64px;border:2px solid var(--gold);background:radial-gradient(#8a1a10,#2a0400);display:flex;align-items:center;justify-content:center;font-size:30px;color:var(--gold)">龙</div>
+    <div style="line-height:22px"><div class="gold" style="font-size:19px">龙腾天下 <span style="font-size:14px;color:#ff9a6a">Lv.8 · 沙巴克城主</span></div><div style="color:var(--mute)">成员 86/120 · 资金 2,860 万 · 繁荣 9,640</div><div style="color:#ccc">公告：今晚 20:00 攻沙，全员上线！</div></div>
+   </div>
+   <div class="inset" style="font-size:15px">
+    <div style="display:grid;grid-template-columns:1.6fr 1fr .8fr 1fr 1fr;padding:6px 10px;background:linear-gradient(#3a2810,#1e140a);color:var(--gold)"><span>角色名</span><span>职位</span><span>等级</span><span>职业</span><span>状态</span></div>
+    <div id="guild"></div>
+   </div>
+   <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px"><span class="btn sm">邀请</span><span class="btn sm">任命</span><span class="btn sm">捐献</span><span class="btn sm red">退出</span></div>
+  </div>
+ </div>
+</div>
+
+<!-- ============ 04 其他系统 ============ -->
+<div class="sec">
+ <div class="sec-t"><b>04</b>养成 / 设置 / 系统窗口</div>
+ <div class="row">
+  <!-- forge -->
+  <div class="win" style="width:480px">
+   <div class="wt">装备强化</div><div class="x">✕</div>
+   <div class="tabs"><span class="tab on">强化</span><span class="tab">镶嵌</span><span class="tab">合成</span><span class="tab">洗炼</span></div>
+   <div class="inset" style="height:230px;position:relative;background:radial-gradient(circle,#4a2a10,#0a0603 70%)">
+    <div style="position:absolute;left:50%;top:50%;width:170px;height:170px;margin:-85px;border:2px dashed var(--gold2);border-radius:50%"></div>
+    <div class="slot q5" style="position:absolute;left:50%;top:50%;width:80px;height:80px;margin:-40px"><svg style="width:64px;height:64px"><use href="#i-sword"/></svg><span class="n" style="font-size:16px;color:#ffd24a">+9</span></div>
+    <div class="slot" style="position:absolute;left:40px;top:30px"><svg><use href="#i-gem"/></svg><span class="n">3</span></div>
+    <div class="slot" style="position:absolute;right:40px;top:30px"><svg><use href="#i-scroll"/></svg><span class="n">1</span></div>
+    <div class="slot" style="position:absolute;left:50%;bottom:8px;margin-left:-28px"><svg><use href="#i-coin"/></svg></div>
+   </div>
+   <div style="margin-top:10px;font-size:15px;line-height:26px">
+    <div class="attr"><span>屠龙 +9 → +10</span><b class="green">攻击 +120</b></div>
+    <div class="attr"><span>成功率</span><b class="orange">45%</b></div>
+    <div class="attr"><span>消耗</span><b>黑铁矿×3 · 金币 500,000</b></div>
+   </div>
+   <div class="chk" style="margin-top:8px"><i>✔</i>使用保护符（失败不降级）</div>
+   <div style="text-align:center;margin-top:12px"><span class="btn big">强 化</span></div>
+  </div>
+  <!-- settings -->
+  <div class="win" style="width:520px">
+   <div class="wt">系统设置</div><div class="x">✕</div>
+   <div class="tabs"><span class="tab">画面</span><span class="tab on">声音</span><span class="tab">挂机</span><span class="tab">快捷键</span></div>
+   <div style="font-size:16px;display:grid;grid-template-columns:110px 1fr 50px;gap:18px 10px;align-items:center">
+    <span>主音量</span><div class="sld"><i style="width:80%"></i><u style="left:168px"></u></div><span class="gold">80</span>
+    <span>背景音乐</span><div class="sld"><i style="width:55%"></i><u style="left:111px"></u></div><span class="gold">55</span>
+    <span>技能音效</span><div class="sld"><i style="width:90%"></i><u style="left:190px"></u></div><span class="gold">90</span>
+   </div>
+   <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <span class="chk"><i>✔</i>显示怪物名称</span><span class="chk"><i>✔</i>显示伤害飘字</span>
+    <span class="chk"><i></i>屏蔽其他玩家</span><span class="chk"><i>✔</i>自动拾取</span>
+    <span class="chk rad"><i>●</i>窗口模式</span><span class="chk rad"><i></i>全屏模式</span>
+   </div>
+   <div style="margin-top:16px;display:flex;align-items:center;gap:10px"><span>分辨率</span><div class="inp" style="flex:1;justify-content:space-between">1920 × 1080 <span class="gold">▼</span></div></div>
+   <div style="display:flex;gap:10px;justify-content:center;margin-top:18px"><span class="btn">恢复默认</span><span class="btn">应 用</span><span class="btn blue">确 定</span></div>
+  </div>
+  <!-- team -->
+  <div class="win" style="width:420px">
+   <div class="wt">组 队</div><div class="x">✕</div>
+   <div id="team"></div>
+   <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <span class="chk"><i>✔</i>自动接受入队</span><span class="chk rad"><i>●</i>自由拾取</span>
+   </div>
+   <div style="display:flex;gap:10px;justify-content:center;margin-top:14px"><span class="btn sm">邀请</span><span class="btn sm">移交队长</span><span class="btn sm red">离队</span></div>
+  </div>
+  <!-- mail / mall -->
+  <div class="win" style="flex:1">
+   <div class="wt">商 城</div><div class="x">✕</div>
+   <div class="tabs"><span class="tab on">热卖</span><span class="tab">装备</span><span class="tab">坐骑</span><span class="tab">时装</span><span class="tab">礼包</span></div>
+   <div id="mall" class="grid" style="grid-template-columns:repeat(3,1fr);gap:10px"></div>
+   <div style="display:flex;justify-content:space-between;margin-top:12px;align-items:center"><span>元宝 <span class="orange">8,800</span>　绑元 <span class="gold">2,350</span></span><span class="btn red">充 值</span></div>
+  </div>
+ </div>
+</div>
+
+<!-- ============ 05 通用组件 ============ -->
+<div class="sec">
+ <div class="sec-t"><b>05</b>通用控件 · 状态规范</div>
+ <div class="row">
+  <div class="win" style="width:620px">
+   <div class="wt">按钮状态</div>
+   <div style="display:grid;grid-template-columns:90px repeat(4,1fr);gap:16px 10px;align-items:center;text-align:center">
+    <span></span><span class="lbl">常态</span><span class="lbl">悬停</span><span class="lbl">按下</span><span class="lbl">禁用</span>
+    <span class="lbl">主按钮</span><span class="btn">确定</span><span class="btn hover">确定</span><span class="btn down">确定</span><span class="btn dis">确定</span>
+    <span class="lbl">警示</span><span class="btn red">删除</span><span class="btn red hover">删除</span><span class="btn red down">删除</span><span class="btn dis">删除</span>
+    <span class="lbl">次要</span><span class="btn blue">购买</span><span class="btn blue hover">购买</span><span class="btn blue down">购买</span><span class="btn dis">购买</span>
+    <span class="lbl">小按钮</span><span class="btn sm">整理</span><span class="btn sm hover">整理</span><span class="btn sm down">整理</span><span class="btn sm dis">整理</span>
+   </div>
+   <div style="display:flex;gap:20px;justify-content:center;align-items:center;margin-top:20px">
+    <span class="btn big">开始游戏</span>
+    <div class="mbtn"><svg><use href="#m-bag"/></svg></div>
+    <div class="mbtn" style="box-shadow:0 0 0 2px #000,0 0 14px #f0b040"><svg><use href="#m-bag"/></svg></div>
+    <div class="x" style="position:static;width:32px;height:32px">✕</div>
+    <span class="btn sm" style="min-width:36px">◀</span><span class="btn sm" style="min-width:36px">▶</span>
+   </div>
+  </div>
+
+  <div class="win" style="width:520px">
+   <div class="wt">表单 · 进度 · 物品格</div>
+   <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="inp">请输入角色名…</div>
+    <div class="inp" style="border-color:var(--gold);box-shadow:0 0 8px #b07020,inset 0 0 6px #000;color:#fff">屠龙战神<span style="color:var(--gold)">|</span></div>
+    <div class="bar hp"><i style="width:72%"></i><span>生命 72%</span></div>
+    <div class="bar mp"><i style="width:48%"></i><span>魔法 48%</span></div>
+    <div class="bar ex"><i style="width:86%"></i><span>经验 86%</span></div>
+    <div class="bar gr" style="height:20px"><i style="width:35%"></i><span>读条：回城中… 35%</span></div>
+    <div style="display:flex;gap:8px;justify-content:center">
+     <div><div class="slot"></div><div class="lbl">空</div></div>
+     <div><div class="slot q1"><svg><use href="#i-boots"/></svg></div><div class="lbl">普通</div></div>
+     <div><div class="slot q2"><svg><use href="#i-belt"/></svg></div><div class="lbl">精良</div></div>
+     <div><div class="slot q3"><svg><use href="#i-brace"/></svg></div><div class="lbl">稀有</div></div>
+     <div><div class="slot q4"><svg><use href="#i-neck"/></svg></div><div class="lbl">史诗</div></div>
+     <div><div class="slot q5"><svg><use href="#i-sword"/></svg></div><div class="lbl">传说</div></div>
+     <div><div class="slot q6"><svg><use href="#i-armor"/></svg></div><div class="lbl">神器</div></div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center">
+     <div><div class="slot"><svg><use href="#s-fire"/></svg><div class="cd">5</div></div><div class="lbl">冷却中</div></div>
+     <div><div class="slot" style="box-shadow:0 0 0 2px #ffe080,0 0 10px #f0b040"><svg><use href="#s-light"/></svg></div><div class="lbl">选中</div></div>
+     <div><div class="slot" style="filter:grayscale(1) brightness(.6)"><svg><use href="#s-thunder"/></svg></div><div class="lbl">未学习</div></div>
+     <div><div class="slot" style="opacity:.9"><svg><use href="#s-heal"/></svg><span style="position:absolute;inset:0;background:rgba(200,0,0,.35)"></span></div><div class="lbl">蓝量不足</div></div>
+     <div><div class="slot"><span style="font-size:30px;color:#888">🔒</span></div><div class="lbl">未解锁</div></div>
+    </div>
+   </div>
+  </div>
+
+  <!-- tooltip -->
+  <div style="width:340px">
+   <div class="tip" style="border-color:#ff9a2a;box-shadow:inset 0 0 0 1px #000,0 0 14px rgba(255,154,42,.4),0 6px 20px #000">
+    <div style="display:flex;gap:10px"><div class="slot q5" style="width:64px;height:64px"><svg style="width:54px;height:54px"><use href="#i-sword"/></svg></div>
+     <div><div class="orange" style="font-size:20px">屠龙 +9</div><div style="color:var(--mute);font-size:13px">武器 · 传说 · 战士专用</div><div class="gold" style="font-size:13px">★★★★★☆</div></div></div>
+    <div style="border-top:1px solid #4a3519;margin:8px 0"></div>
+    <div>攻击 <span style="color:#fff">50-120</span> <span class="green">(+108)</span></div>
+    <div>准确 <span style="color:#fff">+15</span></div>
+    <div>幸运 <span class="orange">+3</span></div>
+    <div class="blue2">[镶嵌] 紫晶石：暴击 +5%</div>
+    <div class="purple">[套装] 屠龙战甲 (2/4)</div>
+    <div style="border-top:1px solid #4a3519;margin:8px 0"></div>
+    <div style="color:var(--mute);font-size:13px">需求等级 52 · 耐久 34/36 · 重量 99</div>
+    <div class="red2" style="font-size:13px">绑定 · 不可交易</div>
+    <div style="color:#c9a86a;font-style:italic;font-size:13px">"传说中斩杀过恶龙的神兵"</div>
+   </div>
+   <div class="cap">物品 Tooltip</div>
+  </div>
+
+  <!-- dialogs -->
+  <div style="width:560px;display:flex;flex-direction:column;gap:20px">
+   <div class="win">
+    <div class="wt">提 示</div><div class="x">✕</div>
+    <div style="text-align:center;font-size:17px;line-height:30px;padding:6px">确定要将 <span class="orange">[屠龙 +9]</span> 分解吗？<br><span class="red2" style="font-size:14px">分解后无法恢复！</span></div>
+    <div style="display:flex;gap:16px;justify-content:center;margin-top:12px"><span class="btn">确 定</span><span class="btn red">取 消</span></div>
+   </div>
+   <div class="win">
+    <div class="wt">数量选择</div>
+    <div style="display:flex;gap:10px;align-items:center;justify-content:center">
+     <div class="slot q2"><svg><use href="#i-hpp"/></svg></div>
+     <span class="btn sm" style="min-width:34px">−</span><div class="inp" style="width:90px;justify-content:center;color:#fff">20</div><span class="btn sm" style="min-width:34px">＋</span><span class="btn sm">最大</span>
+    </div>
+    <div style="text-align:center;margin-top:10px;font-size:15px">总价 <span class="gold">40,000</span> 金币</div>
+   </div>
+   <div style="display:flex;flex-direction:column;gap:8px">
+    <div style="background:linear-gradient(90deg,transparent,rgba(30,90,20,.85) 20%,rgba(30,90,20,.85) 80%,transparent);text-align:center;padding:8px;font-size:17px;color:#d6ffc8">✔ 强化成功！屠龙 +10</div>
+    <div style="background:linear-gradient(90deg,transparent,rgba(120,20,10,.85) 20%,rgba(120,20,10,.85) 80%,transparent);text-align:center;padding:8px;font-size:17px;color:#ffd2c8">✖ 背包空间不足</div>
+    <div style="background:linear-gradient(90deg,transparent,rgba(120,90,10,.85) 20%,rgba(120,90,10,.85) 80%,transparent);text-align:center;padding:8px;font-size:17px;color:#fff3c8">⚠ 你已进入 PK 区域</div>
+   </div>
+  </div>
+  <div class="win" style="flex:1">
+   <div class="wt">排 行 榜</div><div class="x">✕</div>
+   <div class="tabs"><span class="tab on">战力</span><span class="tab">等级</span><span class="tab">行会</span><span class="tab">财富</span></div>
+   <div class="inset" style="font-size:15px">
+    <div style="display:grid;grid-template-columns:50px 1fr 70px 110px;padding:6px 10px;background:linear-gradient(#3a2810,#1e140a);color:var(--gold)"><span>名次</span><span>角色</span><span>职业</span><span>战力</span></div>
+    <div id="rank"></div>
+   </div>
+   <div style="text-align:center;margin-top:10px;font-size:14px;color:var(--mute)">我的排名：<span class="gold">第 1 名</span></div>
+  </div>
+ </div>
+</div>
+
+<!-- ============ 06 登录 & 选角 ============ -->
+<div class="sec">
+ <div class="sec-t"><b>06</b>登录 · 选区 · 创角流程</div>
+ <div class="row">
+  <div style="width:1000px;height:560px;position:relative;border:3px solid var(--gold2);outline:2px solid #000;overflow:hidden;background:
+     radial-gradient(ellipse at 50% 110%,rgba(255,120,30,.55),transparent 55%),
+     linear-gradient(#0a0612,#2a0e08 70%,#4a1a06)">
+   <svg width="1000" height="560" style="position:absolute;inset:0"><path d="M0 460 L120 360 L220 420 L360 300 L480 380 L560 330 L700 400 L820 320 L1000 420 L1000 560 L0 560Z" fill="#120804"/>
+    <path d="M440 300 L440 200 L470 160 L500 200 L530 160 L560 200 L560 300Z" fill="#1e0c06" stroke="#4a2008"/><rect x="485" y="250" width="30" height="50" fill="#ffa040" opacity=".6"/></svg>
+   <div style="position:absolute;top:50px;left:0;right:0;text-align:center;font-size:84px;letter-spacing:20px;color:var(--gold);text-shadow:0 0 30px #f60,0 4px 0 #3a1a00">赤月传说</div>
+   <div style="position:absolute;top:160px;left:0;right:0;text-align:center;color:#d8b070;letter-spacing:10px">— 热血再燃 · 兄弟同行 —</div>
+   <div class="win" style="position:absolute;left:330px;top:250px;width:340px;padding-top:24px">
+    <div style="display:flex;flex-direction:column;gap:12px">
+     <div class="inp">👤 账号</div><div class="inp">🔒 密码</div>
+     <div style="display:flex;justify-content:space-between;font-size:14px"><span class="chk"><i>✔</i>记住账号</span><span class="gold">忘记密码？</span></div>
+     <span class="btn big" style="width:100%">登 录</span>
+     <div style="text-align:center;font-size:14px;color:var(--mute)">当前服务器：<span class="green">● 龙城一区（火爆）</span> <span class="gold">[换区]</span></div>
+    </div>
+   </div>
+   <div style="position:absolute;bottom:8px;left:12px;font-size:12px;color:#7a6a50">抵制不良游戏，拒绝盗版游戏。注意自我保护，谨防受骗上当。</div>
+  </div>
+
+  <div style="flex:1;height:560px;position:relative;border:3px solid var(--gold2);outline:2px solid #000;overflow:hidden;background:radial-gradient(ellipse at 50% 70%,#3a2010,#08040a 70%)">
+   <div style="position:absolute;top:20px;left:0;right:0;text-align:center;font-size:30px;color:var(--gold);letter-spacing:10px;text-shadow:0 0 10px #a60">选择职业</div>
+   <div style="position:absolute;top:80px;left:0;right:0;display:flex;justify-content:center;gap:40px" id="classes"></div>
+   <div style="position:absolute;bottom:22px;left:0;right:0;display:flex;gap:20px;justify-content:center;align-items:center">
+    <span class="btn">返回</span><div class="inp" style="width:260px">输入角色名 <span style="margin-left:auto">🎲</span></div><span class="btn big">进入游戏</span>
+   </div>
+  </div>
+ </div>
+</div>
+
+<script>
+const S=(id,q='',n='',sz='')=>`<div class="slot ${q}" ${sz}>${id?`<svg><use href="#${id}"/></svg>`:''}${n?`<span class="n">${n}</span>`:''}</div>`;
+// skill bar
+const sk=['s-slash','s-fire','s-light','s-shield','s-heal','s-wind','s-thunder','s-dog'];
+document.getElementById('skillbar').innerHTML=sk.map((s,i)=>`<div class="slot" style="width:50px;height:50px"><svg style="width:42px;height:42px"><use href="#${s}"/></svg><span class="key">F${i+1}</span>${i==1?'<div class="cd">5</div>':''}${i==2?'<div class="cd" style="background:conic-gradient(rgba(0,0,0,.72) 0 25%,transparent 25%)">2</div>':''}</div>`).join('');
+const it=[['i-hpp','268'],['i-mpp','150'],['i-scroll','12'],['i-scroll','5'],['i-hpp','40'],['','']];
+document.getElementById('itembar').innerHTML=it.map((s,i)=>`<div class="slot" style="width:50px;height:36px">${s[0]?`<svg style="width:30px;height:30px"><use href="#${s[0]}"/></svg>`:''}<span class="key">${i+1}</span><span class="n" style="font-size:11px">${s[1]}</span></div>`).join('')+'<div style="width:50px"></div>'+['Q','W','E'].map(k=>`<div class="slot" style="width:50px;height:36px"><span class="key">${k}</span></div>`).join('');
+const menus=[['m-char','角色'],['m-bag','背包'],['m-skill','技能'],['m-quest','任务'],['m-guild','行会'],['m-team','组队'],['m-forge','锻造'],['m-set','设置']];
+document.getElementById('menubar').innerHTML=menus.map(m=>`<div class="mbtn" style="width:50px;height:50px;border-radius:8px;font-size:11px"><svg style="width:24px;height:24px"><use href="#${m[0]}"/></svg>${m[1]}</div>`).join('');
+// skill bar width fix
+document.getElementById('skillbar').style.left='360px';
+// equipment
+const eqL=[['i-helm','q5','头盔'],['i-neck','q4','项链'],['i-brace','q3','手镯'],['i-ring','q5','戒指'],['i-belt','q2','腰带']];
+const eqR=[['i-sword','q5','武器'],['i-armor','q6','衣服'],['i-brace','q4','手镯'],['i-ring','q4','戒指'],['i-boots','q3','鞋子']];
+const eqh=a=>a.map(e=>`<div>${S(e[0],e[1])}<div class="lbl">${e[2]}</div></div>`).join('');
+document.getElementById('eqL').innerHTML=eqh(eqL);document.getElementById('eqR').innerHTML=eqh(eqR);
+// bag
+const pool=[['i-hpp','q2','99'],['i-mpp','q2','99'],['i-sword','q5',''],['i-helm','q3',''],['i-ring','q4',''],['i-scroll','q1','8'],['i-gem','q4','3'],['i-coin','',''],['i-boots','q2',''],['i-neck','q3',''],['i-armor','q4',''],['i-book','q3',''],['i-axe','q3',''],['i-staff','q4',''],['i-belt','q1',''],['i-brace','q2',''],['i-chest','q5','2']];
+let bag='';for(let i=0;i<48;i++){const p=i<40&&(i*7)%5!=3?pool[(i*5)%pool.length]:null;bag+=p?S(p[0],p[1],p[2]):S('')}
+document.getElementById('bag').innerHTML=bag;
+// skill list
+const sl=[['s-slash','烈火剑法','Lv.4','q5',true],['s-wind','野蛮冲撞','Lv.3','q4'],['s-fire','半月弯刀','Lv.3','q3'],['s-light','刺杀剑术','Lv.3','q3'],['s-shield','护体神盾','Lv.2','q2'],['s-thunder','逐日剑法','未学习','']];
+document.getElementById('skilllist').innerHTML=sl.map(s=>`<div class="it ${s[4]?'on':''}">${S(s[0],s[3])}<div style="flex:1"><div class="${s[3]?'gold':''}" style="${s[3]?'':'color:#777'}">${s[1]}</div><div style="font-size:13px;color:var(--mute)">${s[2]}</div></div>${s[3]?'<span class="btn sm">升级</span>':'<span class="btn sm dis">学习</span>'}</div>`).join('');
+// shop
+const sh=[['i-hpp','金创药(小)','200','q1'],['i-hpp','强效金创药','2,000','q2'],['i-mpp','魔法药(小)','200','q1'],['i-mpp','强效魔法药','2,000','q2'],['i-scroll','回城卷','500','q1'],['i-scroll','随机传送卷','800','q2'],['i-book','地牢逃脱卷','1,500','q3'],['i-gem','祝福油','50,000','q4']];
+document.getElementById('shop').innerHTML=sh.map(s=>`<div class="inset" style="display:flex;gap:8px;padding:6px;align-items:center">${S(s[0],s[3])}<div><div style="font-size:15px">${s[1]}</div><div style="font-size:13px"><span class="gold">${s[2]}</span> 金币</div></div></div>`).join('');
+// trade
+document.getElementById('tradeA').innerHTML=[S('i-gem','q4','5'),S('i-ring','q5'),S(''),S(''),S(''),S('')].join('');
+document.getElementById('tradeB').innerHTML=[S('i-armor','q4'),S(''),S(''),S(''),S(''),S('')].join('');
+// guild
+const gm=[['龙腾·屠龙战神','会长','86','战士','<span class="green">在线</span>',1],['龙腾·剑舞红尘','副会长','84','法师','<span class="green">在线</span>'],['龙腾·道法自然','长老','82','道士','<span class="green">在线</span>'],['龙腾·狂刀','精英','80','战士','<span style="color:#777">2小时前</span>'],['龙腾·小法师','成员','76','法师','<span class="green">在线</span>'],['龙腾·冷月','成员','71','道士','<span style="color:#777">1天前</span>']];
+document.getElementById('guild').innerHTML=gm.map(g=>`<div style="display:grid;grid-template-columns:1.6fr 1fr .8fr 1fr 1fr;padding:7px 10px;border-bottom:1px solid #2e2213;${g[5]?'background:linear-gradient(90deg,rgba(227,194,122,.22),transparent);box-shadow:inset 3px 0 0 var(--gold)':''}"><span class="gold">${g[0]}</span><span style="color:${g[1]=='会长'?'#ff9a6a':'#ccc'}">${g[1]}</span><span>${g[2]}</span><span>${g[3]}</span>${g[4]}</div>`).join('');
+// team
+const tm=[['屠龙战神','战士 Lv.86',90,70,1],['剑舞红尘','法师 Lv.84',45,88],['道法自然','道士 Lv.82',100,60],['小法师','法师 Lv.76',20,30]];
+document.getElementById('team').innerHTML=tm.map(t=>`<div class="inset" style="display:flex;gap:10px;align-items:center;padding:8px;margin-bottom:8px"><div style="width:48px;height:48px;border-radius:50%;border:2px solid var(--gold2);background:radial-gradient(#6a3a20,#1a0a04);display:flex;align-items:center;justify-content:center;color:var(--gold)">${t[1][0]}</div><div style="flex:1"><div style="display:flex;justify-content:space-between;font-size:15px"><span class="gold">${t[4]?'👑 ':''}${t[0]}</span><span style="color:var(--mute);font-size:13px">${t[1]}</span></div><div class="bar hp" style="height:10px;margin-top:4px"><i style="width:${t[2]}%"></i></div><div class="bar mp" style="height:8px;margin-top:3px"><i style="width:${t[3]}%"></i></div></div></div>`).join('');
+// mall
+const ml=[['i-chest','至尊礼包','648','q6','限时'],['i-gem','神秘宝石','88','q4','热卖'],['i-book','经验卷轴','30','q3',''],['i-armor','天魔神甲','1288','q5','新品'],['i-scroll','高级传送','10','q2',''],['i-ring','麻痹戒指','888','q5','热卖']];
+document.getElementById('mall').innerHTML=ml.map(m=>`<div class="inset" style="padding:10px;text-align:center;position:relative">${m[4]?`<span style="position:absolute;right:0;top:0;background:#c8261c;color:#fff;font-size:12px;padding:1px 6px">${m[4]}</span>`:''}<div style="display:flex;justify-content:center">${S(m[0],m[3])}</div><div style="font-size:15px;margin-top:4px">${m[1]}</div><div class="orange" style="font-size:14px">◆ ${m[2]}</div><span class="btn sm" style="margin-top:6px">购买</span></div>`).join('');
+const rk=[['屠龙战神','战士','1,286,540'],['剑舞红尘','法师','1,104,220'],['道法自然','道士','986,300'],['狂刀','战士','902,180'],['冷月无声','法师','876,050'],['小法师','法师','720,400'],['一刀999','战士','688,120']];
+document.getElementById('rank').innerHTML=rk.map((r,i)=>`<div style="display:grid;grid-template-columns:50px 1fr 70px 110px;padding:7px 10px;border-bottom:1px solid #2e2213"><span style="color:${['#ffd24a','#d8d8e8','#e0904a'][i]||'#999'};font-weight:bold">${i<3?['🥇','🥈','🥉'][i]:i+1}</span><span class="${i<3?'gold':''}">${r[0]}</span><span>${r[1]}</span><span class="orange">${r[2]}</span></div>`).join('');
+// classes
+const cl=[['战士','#8a1a10','url(#steel)','i-sword','力劈华山，近战之王'],['法师','#2a3a8a','url(#ice)','i-staff','雷火冰电，远程爆发'],['道士','#2a6a3a','url(#poi)','i-scroll','召唤毒符，辅助全能']];
+document.getElementById('classes').innerHTML=cl.map((c,i)=>`<div style="text-align:center"><div style="width:220px;height:330px;border:2px solid ${i==0?'var(--gold)':'var(--gold3)'};${i==0?'box-shadow:0 0 20px #e0a040;':''}background:radial-gradient(ellipse at 50% 80%,${c[1]},#08040a 75%);position:relative"><svg width="220" height="330" viewBox="0 0 220 330"><path d="M60 330 L64 170 Q110 140 156 170 L160 330Z" fill="${c[1]}" stroke="#000" stroke-width="2"/><circle cx="110" cy="120" r="30" fill="#e0b088" stroke="#000"/><path d="M78 112 Q110 60 142 112 Q110 96 78 112Z" fill="${c[2]}"/><circle cx="110" cy="260" r="60" fill="${c[2]}" opacity=".18"/></svg><div style="position:absolute;bottom:8px;left:0;right:0;font-size:13px;color:#ccc">${c[4]}</div></div><div style="margin-top:8px;font-size:22px;letter-spacing:6px;color:${i==0?'#ffe7a8':'var(--mute)'}">${c[0]}</div></div>`).join('')+`<div style="display:flex;flex-direction:column;gap:12px;justify-content:center"><span class="btn" style="min-width:90px">♂ 男</span><span class="btn dis" style="min-width:90px">♀ 女</span></div>`;
+</script>
+</body></html>
